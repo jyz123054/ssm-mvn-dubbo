@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xmlns:dubbo="http://code.alibabatech.com/schema/dubbo"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+	 http://www.springframework.org/schema/beans/spring-beans.xsd
+	      http://www.springframework.org/schema/context
+                        http://www.springframework.org/schema/context/spring-context-3.1.xsd
+	 http://code.alibabatech.com/schema/dubbo
+	 http://code.alibabatech.com/schema/dubbo/dubbo.xsd">
+     
+	<dubbo:application name="ssm-mvn-dubbo-consumer" />
+	
+	<!-- 消费端药通过注册中心获取其他服务调用地址 -->
+	<dubbo:registry address="zookeeper://127.0.0.1:2181" />
+	
+	<!-- 消费者端，如果超过3秒不回应直接返回，check=false 不校验服务提供者是否存在，正常生产回家应该设置为true -->
+	<dubbo:consumer timeout="3000" check="false" />
+	
+	<!-- 需要调用的远端接口 -->
+	<dubbo:reference id="userService" interface="org.ssm.mvn.dubbo.api.service.IUserService" />
+	
+	<!-- 基于dubbo注解方式暴露接口 	-->
+	<!-- <dubbo:annotation package="org.ssm.mvn.duboo.web.controller" /> -->
+</beans>
